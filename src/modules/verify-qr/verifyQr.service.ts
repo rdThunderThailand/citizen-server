@@ -10,8 +10,7 @@ export const verifyQrService = {
       .from("reservations")
       .select(`
         id, status, created_at, used_at, user_id, project_id,
-        profiles:user_id ( full_name, national_id, phone_number ),
-        projects:project_id ( title, description )
+        projects ( title, description )
       `)
       .eq("qr_code_data", qrCodeData)
       .maybeSingle();
@@ -23,7 +22,15 @@ export const verifyQrService = {
 
     if (!data) return { success: false, reason: "not_found" };
 
-    const r = data as unknown as ReservationWithRelations;
+    // 1.5 Look up profile manually since reservations.user_id -> auth.users
+    const { data: profile } = await adminClient
+      .from("profiles")
+      .select("full_name, national_id, phone_number")
+      .eq("id", data.user_id)
+      .maybeSingle();
+
+    const r = data as any;
+    r.profiles = profile;
 
     // 2. Status checks
     if (r.status === "used") {
