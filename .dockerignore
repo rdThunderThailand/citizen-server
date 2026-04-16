@@ -1,0 +1,11 @@
+NODE_MODULES
+node_modules
+.bun
+.git
+.env
+.env.local
+dist
+coverage
+README.md
+docker-compose.yml
+Dockerfile

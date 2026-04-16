@@ -1,0 +1,17 @@
+version: "3.8"
+
+services:
+  cityzen-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cityzen-server
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
+      # Note: SUPABASE_SERVICE_ROLE_KEY and others should be in .env
