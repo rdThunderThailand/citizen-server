@@ -19,6 +19,42 @@ const upload = multer({
 });
 
 const router = Router();
+
+/**
+ * @openapi
+ * /api/reports:
+ *   post:
+ *     summary: Submit a report
+ *     tags: [Reports]
+ *     requestBody:
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - province_id
+ *               - report_type
+ *               - description
+ *             properties:
+ *               province_id:
+ *                 type: string
+ *               district_id:
+ *                 type: string
+ *               subdistrict_id:
+ *                 type: string
+ *               report_type:
+ *                 type: string
+ *               description:
+ *                 type: string
+ *               images:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                   format: binary
+ *     responses:
+ *       200:
+ *         description: Success
+ */
 router.post(
   "/",
   upload.array("images", 5),

@@ -9,6 +9,29 @@ export const verifyQrSchema = z.object({
 });
 
 const router = Router();
+
+/**
+ * @openapi
+ * /api/verify-qr:
+ *   post:
+ *     summary: Verify a QR code
+ *     tags: [Verify QR]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [qr_code_data]
+ *             properties:
+ *               qr_code_data:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ */
 router.post(
   "/",
   requireStaffSecret,

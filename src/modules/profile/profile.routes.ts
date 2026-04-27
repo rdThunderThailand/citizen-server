@@ -13,6 +13,45 @@ export const profileUpdateSchema = z.object({
 });
 
 const router = Router();
+
+/**
+ * @openapi
+ * /api/profile:
+ *   get:
+ *     summary: Get user profile
+ *     tags: [Profile]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Success
+ */
 router.get(   "/", requireAuth, profileController.get);
+
+/**
+ * @openapi
+ * /api/profile:
+ *   patch:
+ *     summary: Update user profile
+ *     tags: [Profile]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               full_name:
+ *                 type: string
+ *               national_id:
+ *                 type: string
+ *               phone_number:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ */
 router.patch( "/", requireAuth, validateBody(profileUpdateSchema), profileController.update);
 export default router;

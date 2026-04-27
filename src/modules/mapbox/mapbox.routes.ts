@@ -5,6 +5,16 @@ import { ok, fail } from "../../utils/response.js";
 
 const router = Router();
 
+/**
+ * @openapi
+ * /api/mapbox-token:
+ *   get:
+ *     summary: Get Mapbox Token
+ *     tags: [Mapbox]
+ *     responses:
+ *       200:
+ *         description: Success
+ */
 router.get("/", (_req: Request, res: Response): void => {
   if (!env.MAPBOX_TOKEN) {
     fail(res, "MAPBOX_TOKEN not configured on server");
